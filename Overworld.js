@@ -9,7 +9,8 @@ class Overworld {
   startGameLoop() {
     const step = () => {
 
-      this.ctx.clearRect(0, 0, this.canvas.length, this.canvas.height)
+      // clear off the canvas
+      this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height)
 
       // draw lower layer
       this.map.drawLowerImage(this.ctx)
