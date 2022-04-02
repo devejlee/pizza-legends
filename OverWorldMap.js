@@ -1,6 +1,7 @@
 class OverworldMap {
   constructor(config) {
     this.gameObjects = config.gameObjects
+    this.cutsceneSpaces = config.cutsceneSpaces || {};
     this.walls = config.walls || {}
 
     this.lowerImage = new Image();
@@ -9,7 +10,7 @@ class OverworldMap {
     this.upperImage = new Image();
     this.upperImage.src = config.upperSrc
 
-    this.isCutscenePlaying = true
+    this.isCutscenePlaying = false
   }
 
   drawLowerImage(ctx, cameraPerson) {
@@ -53,6 +54,26 @@ class OverworldMap {
     Object.values(this.gameObjects).forEach(object => object.doBehaviorEvent(this))
   }
 
+  checkForActionCutscene() {
+    const hero = this.gameObjects['hero']
+    const nextCoords = utils.nextPosition(hero.x, hero.y, hero.direction)
+    const match = Object.values(this.gameObjects).find(object => {
+      return `${object.x}, ${object.y}` === `${nextCoords.x}, ${nextCoords.y}`
+    })
+    console.log('match', match)
+    if (!this.isCutscenePlaying && match && match.talking.length) {
+      this.startCutscene(match.talking[0].events)
+    }
+  }
+
+  checkForFootstepCutscene() {
+    const hero = this.gameObjects["hero"];
+    const match = this.cutsceneSpaces[`${hero.x},${hero.y}`];
+    if (!this.isCutscenePlaying && match) {
+      this.startCutscene(match[0].events)
+    }
+  }
+
   addWall(x, y) {
     this.walls[`${x}, ${y}`] = true
   }
@@ -87,6 +108,14 @@ window.OverworldMaps = {
           { type: 'stand', direction: 'up', time: 800 },
           { type: 'stand', direction: 'right', time: 1200 },
           { type: 'stand', direction: 'up', time: 300 },
+        ],
+        talking: [
+          {
+            events: [
+              { type: 'textMessage', text: "I'm busy..." },
+              { type: 'textMessage', text: 'Go away!' }
+            ]
+          },
         ]
       }),
       npcB: new Person({
@@ -107,7 +136,8 @@ window.OverworldMaps = {
       [utils.asGridCord(8, 6)]: true,
       [utils.asGridCord(7, 7)]: true,
       [utils.asGridCord(8, 7)]: true,
-    }
+    },
+
   },
   Kitchen: {
     lowerSrc: "/images/maps/KitchenLower.png",
