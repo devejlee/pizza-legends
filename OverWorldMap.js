@@ -60,7 +60,6 @@ class OverworldMap {
     const match = Object.values(this.gameObjects).find(object => {
       return `${object.x}, ${object.y}` === `${nextCoords.x}, ${nextCoords.y}`
     })
-    console.log('match', match)
     if (!this.isCutscenePlaying && match && match.talking.length) {
       this.startCutscene(match.talking[0].events)
     }
@@ -112,8 +111,9 @@ window.OverworldMaps = {
         talking: [
           {
             events: [
-              { type: 'textMessage', text: "I'm busy..." },
-              { type: 'textMessage', text: 'Go away!' }
+              { type: 'textMessage', text: "I'm busy...", faceHero: 'npcA' },
+              { type: 'textMessage', text: 'Go away!' },
+              { who: 'hero', type: 'walk', direction: 'up' },
             ]
           },
         ]
