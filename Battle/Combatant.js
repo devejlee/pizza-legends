@@ -78,7 +78,16 @@ class Combatant {
       statusElement.innerText = "";
       statusElement.style.display = "none";
     }
+  }
 
+  getReplacedEvents(originalEvents) {
+    if (this.status?.type === "clumsy" && utils.randomFromArray([true, false, false])) {
+      return [
+        { type: "textMessage", text: `${this.name} flops over!` },
+      ]
+    }
+
+    return originalEvents;
   }
 
   getPostEvents() {
