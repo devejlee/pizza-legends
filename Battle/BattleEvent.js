@@ -67,7 +67,7 @@ class BattleEvent {
   submissionMenu(resolve) {
     const { caster } = this.event;
     const menu = new SubmissionMenu({
-      caster: this.event.caster,
+      caster: caster,
       enemy: this.event.enemy,
       items: this.battle.items,
       replacements: Object.values(this.battle.combatants).filter(c => {
@@ -76,6 +76,18 @@ class BattleEvent {
       onComplete: submission => {
         //submission { what move to use, who to use it on }
         resolve(submission)
+      }
+    })
+    menu.init(this.battle.element)
+  }
+
+  replacementMenu(resolve) {
+    const menu = new ReplacementMenu({
+      replacements: Object.values(this.battle.combatants).filter(c => {
+        return c.team === this.event.team && c.hp > 0
+      }),
+      onComplete: replacement => {
+        resolve(replacement)
       }
     })
     menu.init(this.battle.element)
