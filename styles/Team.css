@@ -1,33 +1,28 @@
-.Battle {
+.Team {
+  display: flex;
   position: absolute;
-  left:0;
-  right:0;
-  top:0;
-  bottom:0;
-  background-image: url(/images/maps/StreetBattle.png);
-  background-size: cover;
-  image-rendering: pixelated;
+  top:4px;
+  gap: 4px;
+}
+.Team[data-team="player"] {
+  left:4px;
+}
+.Team[data-team="enemy"] {
+  right:4px;
 }
 
-.Battle_hero, .Battle_enemy {
-  position: absolute;
-  transform: scale(2);
-  width: 32px;
-  height: 32px;
-  overflow: hidden;
-  background: url(/images/characters/shadow.png) no-repeat no-repeat;
+/* Start stateful paths as display:none */
+.Team .dead-pizza {
+  display:none;
 }
-.Battle_hero img, .Battle_enemy img {
-  pointer-events: none;
+.Team .active-pizza-indicator {
+  display:none;
 }
-.Battle_hero {
-  bottom: 57px;
-  left: 1px;
+
+/* Display them as opted in by data-attributes */
+.Team [data-dead="true"] .dead-pizza {
+display:block;
 }
-.Battle_hero img {
-  transform: translateY(-64px); /* Nudge hero spritesheet */
-}
-.Battle_enemy {
-  top: 42px;
-  right: -1px;
+.Team [data-active="true"] .active-pizza-indicator {
+  display:block;
 }
