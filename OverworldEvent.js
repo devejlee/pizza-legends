@@ -72,11 +72,13 @@ class OverworldEvent {
 
   battle(resolve) {
     const battle = new Battle({
+      enemy: Enemies[this.event.enemyId],
       onComplete: () => {
-        resolve()
+        resolve();
       }
     })
-    battle.init(document.querySelector('.game-container'))
+    battle.init(document.querySelector(".game-container"));
+
   }
 
   init() {

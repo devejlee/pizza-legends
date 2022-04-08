@@ -1,7 +1,8 @@
 class TurnCycle {
-  constructor({ battle, onNewEvent }) {
+  constructor({ battle, onNewEvent, onWinner }) {
     this.battle = battle;
     this.onNewEvent = onNewEvent;
+    this.onWinner = onWinner;
     this.currentTeam = "player"; //or "enemy"
   }
 
@@ -33,6 +34,11 @@ class TurnCycle {
     }
 
     if (submission.instanceId) {
+
+      //Add to list to persist to player state later
+      this.battle.usedInstanceIds[submission.instanceId] = true;
+
+      //Removing item from battle state
       this.battle.items = this.battle.items.filter(i => i.instanceId !== submission.instanceId)
     }
 
@@ -80,7 +86,7 @@ class TurnCycle {
         type: "textMessage",
         text: "Winner!"
       })
-      //END THE BATTLE -> TODO
+      this.onWinner(winner);
       return;
     }
 
@@ -142,10 +148,10 @@ class TurnCycle {
   }
 
   async init() {
-    // await this.onNewEvent({
-    //   type: "textMessage",
-    //   text: "The battle is starting!"
-    // })
+    await this.onNewEvent({
+      type: "textMessage",
+      text: `${this.battle.enemy.name} wants to throw down!`
+    })
 
     //Start the first turn!
     this.turn();
