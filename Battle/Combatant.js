@@ -17,7 +17,7 @@ class Combatant {
   }
 
   get isActive() {
-    return this.battle.activeCombatants[this.team] === this.id;
+    return this.battle?.activeCombatants[this.team] === this.id;
   }
 
   get givesXp() {
@@ -86,6 +86,7 @@ class Combatant {
   }
 
   getReplacedEvents(originalEvents) {
+
     if (this.status?.type === "clumsy" && utils.randomFromArray([true, false, false])) {
       return [
         { type: "textMessage", text: `${this.name} flops over!` },
