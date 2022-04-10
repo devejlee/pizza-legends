@@ -1,5 +1,6 @@
 class PauseMenu {
-  constructor({ onComplete }) {
+  constructor({ progress, onComplete }) {
+    this.progress = progress;
     this.onComplete = onComplete;
   }
 
@@ -24,7 +25,8 @@ class PauseMenu {
           label: "Save",
           description: "Save your progress",
           handler: () => {
-            //We'll come back to this...
+            this.progress.save();
+            this.close();
           }
         },
         {
@@ -75,8 +77,8 @@ class PauseMenu {
 
   createElement() {
     this.element = document.createElement("div");
-    this.element.classList.add("PauseMenu")
-    this.element.classList.add("overlayMenu")
+    this.element.classList.add("PauseMenu");
+    this.element.classList.add("overlayMenu");
     this.element.innerHTML = (`
       <h2>Pause Menu</h2>
     `)

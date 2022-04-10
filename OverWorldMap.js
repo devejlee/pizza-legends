@@ -101,6 +101,7 @@ class OverworldMap {
 
 window.OverworldMaps = {
   DemoRoom: {
+    id: "DemoRoom",
     lowerSrc: "/images/maps/DemoLower.png",
     upperSrc: "/images/maps/DemoUpper.png",
     gameObjects: {
@@ -114,10 +115,10 @@ window.OverworldMaps = {
         y: utils.withGrid(9),
         src: "/images/characters/people/npc1.png",
         behaviorLoop: [
-          { type: 'stand', direction: 'left', time: 800 },
-          { type: 'stand', direction: 'up', time: 800 },
-          { type: 'stand', direction: 'right', time: 1200 },
-          { type: 'stand', direction: 'up', time: 300 },
+          { type: "stand", direction: "left", time: 800 },
+          { type: "stand", direction: "up", time: 800 },
+          { type: "stand", direction: "right", time: 1200 },
+          { type: "stand", direction: "up", time: 300 },
         ],
         talking: [
           {
@@ -152,11 +153,11 @@ window.OverworldMaps = {
           }
         ]
         // behaviorLoop: [
-        //   { type: 'walk', direction: 'left' },
-        //   { type: 'stand', direction: 'up', time: 800 },
-        //   { type: 'walk', direction: 'up' },
-        //   { type: 'walk', direction: 'right' },
-        //   { type: 'walk', direction: 'down' },
+        //   { type: "walk",  direction: "left" },
+        //   { type: "stand",  direction: "up", time: 800 },
+        //   { type: "walk",  direction: "up" },
+        //   { type: "walk",  direction: "right" },
+        //   { type: "walk",  direction: "down" },
         // ]
       }),
       pizzaStone: new PizzaStone({
@@ -188,13 +189,21 @@ window.OverworldMaps = {
       [utils.asGridCoord(5, 10)]: [
         {
           events: [
-            { type: "changeMap", map: "Kitchen" }
+            {
+              type: "changeMap",
+              map: "Kitchen",
+              x: utils.withGrid(2),
+              y: utils.withGrid(2),
+              direction: "down"
+            }
           ]
         }
       ]
     }
+
   },
   Kitchen: {
+    id: "Kitchen",
     lowerSrc: "/images/maps/KitchenLower.png",
     upperSrc: "/images/maps/KitchenUpper.png",
     gameObjects: {
@@ -210,11 +219,53 @@ window.OverworldMaps = {
         talking: [
           {
             events: [
-              { type: "textMessage", text: "You made it!", faceHero: "npcB" },
+              { type: "textMessage", text: "You made it! This video is going to be such a good time!", faceHero: "npcB" },
             ]
           }
         ]
       })
+    },
+    cutsceneSpaces: {
+      [utils.asGridCoord(5, 10)]: [
+        {
+          events: [
+            {
+              type: "changeMap",
+              map: "Street",
+              x: utils.withGrid(29),
+              y: utils.withGrid(9),
+              direction: "down"
+            }
+          ]
+        }
+      ]
     }
   },
+  Street: {
+    id: "Street",
+    lowerSrc: "/images/maps/StreetLower.png",
+    upperSrc: "/images/maps/StreetUpper.png",
+    gameObjects: {
+      hero: new Person({
+        isPlayerControlled: true,
+        x: utils.withGrid(30),
+        y: utils.withGrid(10),
+      })
+    },
+    cutsceneSpaces: {
+      [utils.asGridCoord(29, 9)]: [
+        {
+          events: [
+            {
+              type: "changeMap",
+              map: "Kitchen",
+              x: utils.withGrid(5),
+              y: utils.withGrid(10),
+              direction: "up"
+            }
+          ]
+        }
+      ]
+    }
+  }
 }
