@@ -8,7 +8,7 @@ class TitleScreen {
     return [
       {
         label: "New Game",
-        description: "Start a new pizza adventure!",
+        description: `Start a new pizza adventure! \n (Will not work on mobile devices)`,
         handler: () => {
           this.close();
           resolve();
