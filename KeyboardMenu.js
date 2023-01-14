@@ -52,7 +52,7 @@ class KeyboardMenu {
     //Description box element
     this.descriptionElement = document.createElement("div");
     this.descriptionElement.classList.add("DescriptionBox");
-    this.descriptionElement.innerHTML = (`<p>I will provide information!</p>`);
+    this.descriptionElement.innerHTML = (`<p>Start Game! \n (Will not work on mobile devices)</p>`);
     this.descriptionElementText = this.descriptionElement.querySelector("p");
   }
 
